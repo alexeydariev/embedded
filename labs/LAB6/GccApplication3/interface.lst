@@ -1,0 +1,363 @@
+   1               		.file	"interface.c"
+   2               	__SREG__ = 0x3f
+   3               	__SP_H__ = 0x3e
+   4               	__SP_L__ = 0x3d
+   5               	__CCP__  = 0x34
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+  15               	.Ltext0:
+  16               	.global	GUI_SetTime
+  18               	GUI_SetTime:
+  19               	.LFB13:
+  20               	.LM1:
+  21               	/* prologue: function */
+  22               	/* frame size = 0 */
+  23               	.LM2:
+  24 0000 84EC      		ldi r24,lo8(-60)
+  25 0002 00D0      		rcall LCD_WriteCom
+  26               	.LM3:
+  27 0004 8091 0000 		lds r24,minutes
+  28 0008 00D0      		rcall BCD_2Lcd
+  29               	/* epilogue start */
+  30               	.LM4:
+  31 000a 0895      		ret
+  32               	.LFE13:
+  34               	.global	GUI_DecMinute
+  36               	GUI_DecMinute:
+  37               	.LFB12:
+  38               	.LM5:
+  39               	/* prologue: function */
+  40               	/* frame size = 0 */
+  41               	.LM6:
+  42 000c 8091 0000 		lds r24,minutes
+  43 0010 8823      		tst r24
+  44 0012 01F0      		breq .L8
+  45               	.LM7:
+  46 0014 8150      		subi r24,lo8(-(-1))
+  47 0016 8093 0000 		sts minutes,r24
+  48               	.LM8:
+  49 001a 84EC      		ldi r24,lo8(-60)
+  50 001c 00D0      		rcall LCD_WriteCom
+  51               	.LM9:
+  52 001e 8091 0000 		lds r24,minutes
+  53 0022 00D0      		rcall BCD_2Lcd
+  54               	/* epilogue start */
+  55               	.LM10:
+  56 0024 0895      		ret
+  57               	.L8:
+  58               	.LM11:
+  59 0026 8BE3      		ldi r24,lo8(59)
+  60 0028 8093 0000 		sts minutes,r24
+  61               	.LM12:
+  62 002c 84EC      		ldi r24,lo8(-60)
+  63 002e 00D0      		rcall LCD_WriteCom
+  64               	.LM13:
+  65 0030 8091 0000 		lds r24,minutes
+  66 0034 00D0      		rcall BCD_2Lcd
+  67               	.LM14:
+  68 0036 0895      		ret
+  69               	.LFE12:
+  71               	.global	GUI_IncMinute
+  73               	GUI_IncMinute:
+  74               	.LFB11:
+  75               	.LM15:
+  76               	/* prologue: function */
+  77               	/* frame size = 0 */
+  78               	.LM16:
+  79 0038 8091 0000 		lds r24,minutes
+  80 003c 8B33      		cpi r24,lo8(59)
+  81 003e 01F0      		breq .L13
+  82               	.LM17:
+  83 0040 8F5F      		subi r24,lo8(-(1))
+  84 0042 8093 0000 		sts minutes,r24
+  85               	.LM18:
+  86 0046 84EC      		ldi r24,lo8(-60)
+  87 0048 00D0      		rcall LCD_WriteCom
+  88               	.LM19:
+  89 004a 8091 0000 		lds r24,minutes
+  90 004e 00D0      		rcall BCD_2Lcd
+  91               	/* epilogue start */
+  92               	.LM20:
+  93 0050 0895      		ret
+  94               	.L13:
+  95               	.LM21:
+  96 0052 1092 0000 		sts minutes,__zero_reg__
+  97               	.LM22:
+  98 0056 84EC      		ldi r24,lo8(-60)
+  99 0058 00D0      		rcall LCD_WriteCom
+ 100               	.LM23:
+ 101 005a 8091 0000 		lds r24,minutes
+ 102 005e 00D0      		rcall BCD_2Lcd
+ 103               	.LM24:
+ 104 0060 0895      		ret
+ 105               	.LFE11:
+ 107               	.global	GUI_DecHour
+ 109               	GUI_DecHour:
+ 110               	.LFB10:
+ 111               	.LM25:
+ 112               	/* prologue: function */
+ 113               	/* frame size = 0 */
+ 114               	.LM26:
+ 115 0062 8091 0000 		lds r24,hours
+ 116 0066 8823      		tst r24
+ 117 0068 01F0      		breq .L18
+ 118               	.LM27:
+ 119 006a 8150      		subi r24,lo8(-(-1))
+ 120 006c 8093 0000 		sts hours,r24
+ 121               	.LM28:
+ 122 0070 81EC      		ldi r24,lo8(-63)
+ 123 0072 00D0      		rcall LCD_WriteCom
+ 124               	.LM29:
+ 125 0074 8091 0000 		lds r24,hours
+ 126 0078 00D0      		rcall BCD_2Lcd
+ 127               	/* epilogue start */
+ 128               	.LM30:
+ 129 007a 0895      		ret
+ 130               	.L18:
+ 131               	.LM31:
+ 132 007c 87E1      		ldi r24,lo8(23)
+ 133 007e 8093 0000 		sts hours,r24
+ 134               	.LM32:
+ 135 0082 81EC      		ldi r24,lo8(-63)
+ 136 0084 00D0      		rcall LCD_WriteCom
+ 137               	.LM33:
+ 138 0086 8091 0000 		lds r24,hours
+ 139 008a 00D0      		rcall BCD_2Lcd
+ 140               	.LM34:
+ 141 008c 0895      		ret
+ 142               	.LFE10:
+ 144               	.global	GUI_IncHour
+ 146               	GUI_IncHour:
+ 147               	.LFB9:
+ 148               	.LM35:
+ 149               	/* prologue: function */
+ 150               	/* frame size = 0 */
+ 151               	.LM36:
+ 152 008e 8091 0000 		lds r24,hours
+ 153 0092 8731      		cpi r24,lo8(23)
+ 154 0094 01F0      		breq .L23
+ 155               	.LM37:
+ 156 0096 8F5F      		subi r24,lo8(-(1))
+ 157 0098 8093 0000 		sts hours,r24
+ 158               	.LM38:
+ 159 009c 81EC      		ldi r24,lo8(-63)
+ 160 009e 00D0      		rcall LCD_WriteCom
+ 161               	.LM39:
+ 162 00a0 8091 0000 		lds r24,hours
+ 163 00a4 00D0      		rcall BCD_2Lcd
+ 164               	/* epilogue start */
+ 165               	.LM40:
+ 166 00a6 0895      		ret
+ 167               	.L23:
+ 168               	.LM41:
+ 169 00a8 1092 0000 		sts hours,__zero_reg__
+ 170               	.LM42:
+ 171 00ac 81EC      		ldi r24,lo8(-63)
+ 172 00ae 00D0      		rcall LCD_WriteCom
+ 173               	.LM43:
+ 174 00b0 8091 0000 		lds r24,hours
+ 175 00b4 00D0      		rcall BCD_2Lcd
+ 176               	.LM44:
+ 177 00b6 0895      		ret
+ 178               	.LFE9:
+ 180               	.global	GUI_ChangeTime
+ 182               	GUI_ChangeTime:
+ 183               	.LFB14:
+ 184               	.LM45:
+ 185               	/* prologue: function */
+ 186               	/* frame size = 0 */
+ 187               	.LM46:
+ 188 00b8 8091 0000 		lds r24,seconds
+ 189 00bc 8F5F      		subi r24,lo8(-(1))
+ 190 00be 8093 0000 		sts seconds,r24
+ 191               	.LM47:
+ 192 00c2 8C33      		cpi r24,lo8(60)
+ 193 00c4 01F0      		breq .L29
+ 194               	.L25:
+ 195               	.LM48:
+ 196 00c6 81EC      		ldi r24,lo8(-63)
+ 197 00c8 00D0      		rcall LCD_WriteCom
+ 198               	.LM49:
+ 199 00ca 8091 0000 		lds r24,hours
+ 200 00ce 00D0      		rcall BCD_2Lcd
+ 201               	.LM50:
+ 202 00d0 8091 0000 		lds r24,seconds
+ 203 00d4 80FD      		sbrc r24,0
+ 204 00d6 00C0      		rjmp .L30
+ 205               	.LM51:
+ 206 00d8 8AE3      		ldi r24,lo8(58)
+ 207 00da 00D0      		rcall LCD_WriteData
+ 208               	.LM52:
+ 209 00dc 8091 0000 		lds r24,minutes
+ 210 00e0 00D0      		rcall BCD_2Lcd
+ 211               	/* epilogue start */
+ 212               	.LM53:
+ 213 00e2 0895      		ret
+ 214               	.L30:
+ 215               	.LM54:
+ 216 00e4 80E2      		ldi r24,lo8(32)
+ 217 00e6 00D0      		rcall LCD_WriteData
+ 218               	.LM55:
+ 219 00e8 8091 0000 		lds r24,minutes
+ 220 00ec 00D0      		rcall BCD_2Lcd
+ 221               	.LM56:
+ 222 00ee 0895      		ret
+ 223               	.L29:
+ 224               	.LM57:
+ 225 00f0 1092 0000 		sts seconds,__zero_reg__
+ 226               	.LM58:
+ 227 00f4 8091 0000 		lds r24,minutes
+ 228 00f8 8F5F      		subi r24,lo8(-(1))
+ 229 00fa 8093 0000 		sts minutes,r24
+ 230               	.LM59:
+ 231 00fe 8C33      		cpi r24,lo8(60)
+ 232 0100 01F4      		brne .L25
+ 233               	.LM60:
+ 234 0102 1092 0000 		sts minutes,__zero_reg__
+ 235               	.LM61:
+ 236 0106 8091 0000 		lds r24,hours
+ 237 010a 8F5F      		subi r24,lo8(-(1))
+ 238 010c 8093 0000 		sts hours,r24
+ 239               	.LM62:
+ 240 0110 8831      		cpi r24,lo8(24)
+ 241 0112 01F4      		brne .L25
+ 242               	.LM63:
+ 243 0114 1092 0000 		sts hours,__zero_reg__
+ 244 0118 00C0      		rjmp .L25
+ 245               	.LFE14:
+ 247               	.global	GUI_SelectMinute
+ 249               	GUI_SelectMinute:
+ 250               	.LFB8:
+ 251               	.LM64:
+ 252               	/* prologue: function */
+ 253               	/* frame size = 0 */
+ 254               	.LM65:
+ 255 011a 80EC      		ldi r24,lo8(-64)
+ 256 011c 00D0      		rcall LCD_WriteCom
+ 257               	.LM66:
+ 258 011e 80E2      		ldi r24,lo8(32)
+ 259 0120 00D0      		rcall LCD_WriteData
+ 260               	.LM67:
+ 261 0122 8091 0000 		lds r24,hours
+ 262 0126 00D0      		rcall BCD_2Lcd
+ 263               	.LM68:
+ 264 0128 8CE3      		ldi r24,lo8(60)
+ 265 012a 00D0      		rcall LCD_WriteData
+ 266               	.LM69:
+ 267 012c 8091 0000 		lds r24,minutes
+ 268 0130 00D0      		rcall BCD_2Lcd
+ 269               	.LM70:
+ 270 0132 8EE3      		ldi r24,lo8(62)
+ 271 0134 00D0      		rcall LCD_WriteData
+ 272               	/* epilogue start */
+ 273               	.LM71:
+ 274 0136 0895      		ret
+ 275               	.LFE8:
+ 277               	.global	GUI_SelectHour
+ 279               	GUI_SelectHour:
+ 280               	.LFB7:
+ 281               	.LM72:
+ 282               	/* prologue: function */
+ 283               	/* frame size = 0 */
+ 284               	.LM73:
+ 285 0138 80EC      		ldi r24,lo8(-64)
+ 286 013a 00D0      		rcall LCD_WriteCom
+ 287               	.LM74:
+ 288 013c 8CE3      		ldi r24,lo8(60)
+ 289 013e 00D0      		rcall LCD_WriteData
+ 290               	.LM75:
+ 291 0140 8091 0000 		lds r24,hours
+ 292 0144 00D0      		rcall BCD_2Lcd
+ 293               	.LM76:
+ 294 0146 8EE3      		ldi r24,lo8(62)
+ 295 0148 00D0      		rcall LCD_WriteData
+ 296               	/* epilogue start */
+ 297               	.LM77:
+ 298 014a 0895      		ret
+ 299               	.LFE7:
+ 301               		.data
+ 302               	.LC0:
+ 303 0000 636C 6F63 		.string	"clock"
+ 303      6B00 
+ 304               		.text
+ 305               	.global	GUI_General
+ 307               	GUI_General:
+ 308               	.LFB6:
+ 309               	.LM78:
+ 310               	/* prologue: function */
+ 311               	/* frame size = 0 */
+ 312               	.LM79:
+ 313 014c 00D0      		rcall LCD_Clear
+ 314               	.LM80:
+ 315 014e 81E8      		ldi r24,lo8(-127)
+ 316 0150 00D0      		rcall LCD_WriteCom
+ 317               	.LM81:
+ 318 0152 80E0      		ldi r24,lo8(.LC0)
+ 319 0154 90E0      		ldi r25,hi8(.LC0)
+ 320 0156 00D0      		rcall LCD_SendString
+ 321               	.LM82:
+ 322 0158 81EC      		ldi r24,lo8(-63)
+ 323 015a 00D0      		rcall LCD_WriteCom
+ 324               	.LM83:
+ 325 015c 8091 0000 		lds r24,hours
+ 326 0160 00D0      		rcall BCD_2Lcd
+ 327               	.LM84:
+ 328 0162 8091 0000 		lds r24,seconds
+ 329 0166 80FD      		sbrc r24,0
+ 330 0168 00C0      		rjmp .L39
+ 331               	.LM85:
+ 332 016a 8AE3      		ldi r24,lo8(58)
+ 333 016c 00D0      		rcall LCD_WriteData
+ 334               	.LM86:
+ 335 016e 8091 0000 		lds r24,minutes
+ 336 0172 00D0      		rcall BCD_2Lcd
+ 337               	.LM87:
+ 338 0174 1092 0000 		sts seconds,__zero_reg__
+ 339               	/* epilogue start */
+ 340               	.LM88:
+ 341 0178 0895      		ret
+ 342               	.L39:
+ 343               	.LM89:
+ 344 017a 80E2      		ldi r24,lo8(32)
+ 345 017c 00D0      		rcall LCD_WriteData
+ 346               	.LM90:
+ 347 017e 8091 0000 		lds r24,minutes
+ 348 0182 00D0      		rcall BCD_2Lcd
+ 349               	.LM91:
+ 350 0184 1092 0000 		sts seconds,__zero_reg__
+ 351               	.LM92:
+ 352 0188 0895      		ret
+ 353               	.LFE6:
+ 355               		.lcomm seconds,1
+ 356               		.lcomm minutes,1
+ 357               		.lcomm hours,1
+ 446               	.Letext0:
+DEFINED SYMBOLS
+                            *ABS*:00000000 interface.c
+C:\DOCUME~1\оюбек\LOCALS~1\Temp/ccWIIyFJ.s:2      *ABS*:0000003f __SREG__
+C:\DOCUME~1\оюбек\LOCALS~1\Temp/ccWIIyFJ.s:3      *ABS*:0000003e __SP_H__
+C:\DOCUME~1\оюбек\LOCALS~1\Temp/ccWIIyFJ.s:4      *ABS*:0000003d __SP_L__
+C:\DOCUME~1\оюбек\LOCALS~1\Temp/ccWIIyFJ.s:5      *ABS*:00000034 __CCP__
+C:\DOCUME~1\оюбек\LOCALS~1\Temp/ccWIIyFJ.s:6      *ABS*:00000000 __tmp_reg__
+C:\DOCUME~1\оюбек\LOCALS~1\Temp/ccWIIyFJ.s:7      *ABS*:00000001 __zero_reg__
+C:\DOCUME~1\оюбек\LOCALS~1\Temp/ccWIIyFJ.s:18     .text:00000000 GUI_SetTime
+C:\DOCUME~1\оюбек\LOCALS~1\Temp/ccWIIyFJ.s:355    .bss:00000001 minutes
+C:\DOCUME~1\оюбек\LOCALS~1\Temp/ccWIIyFJ.s:36     .text:0000000c GUI_DecMinute
+C:\DOCUME~1\оюбек\LOCALS~1\Temp/ccWIIyFJ.s:73     .text:00000038 GUI_IncMinute
+C:\DOCUME~1\оюбек\LOCALS~1\Temp/ccWIIyFJ.s:109    .text:00000062 GUI_DecHour
+C:\DOCUME~1\оюбек\LOCALS~1\Temp/ccWIIyFJ.s:356    .bss:00000002 hours
+C:\DOCUME~1\оюбек\LOCALS~1\Temp/ccWIIyFJ.s:146    .text:0000008e GUI_IncHour
+C:\DOCUME~1\оюбек\LOCALS~1\Temp/ccWIIyFJ.s:182    .text:000000b8 GUI_ChangeTime
+                             .bss:00000000 seconds
+C:\DOCUME~1\оюбек\LOCALS~1\Temp/ccWIIyFJ.s:249    .text:0000011a GUI_SelectMinute
+C:\DOCUME~1\оюбек\LOCALS~1\Temp/ccWIIyFJ.s:279    .text:00000138 GUI_SelectHour
+C:\DOCUME~1\оюбек\LOCALS~1\Temp/ccWIIyFJ.s:307    .text:0000014c GUI_General
+
+UNDEFINED SYMBOLS
+LCD_WriteCom
+BCD_2Lcd
+LCD_WriteData
+LCD_Clear
+LCD_SendString
+__do_copy_data
+__do_clear_bss

@@ -1,0 +1,342 @@
+   1               		.file	"event-system.c"
+   2               	__SREG__ = 0x3f
+   3               	__SP_H__ = 0x3e
+   4               	__SP_L__ = 0x3d
+   5               	__CCP__  = 0x34
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+  15               	.Ltext0:
+  16               	.global	ES_GetEvent
+  18               	ES_GetEvent:
+  19               	.LFB6:
+  20               	.LM1:
+  21               	/* prologue: function */
+  22               	/* frame size = 0 */
+  23               	.LM2:
+  24 0000 8091 0000 		lds r24,countBuf
+  25 0004 8823      		tst r24
+  26 0006 01F0      		breq .L6
+  27               	.LM3:
+  28 0008 E091 0000 		lds r30,headBuf
+  29 000c F0E0      		ldi r31,lo8(0)
+  30 000e E050      		subi r30,lo8(-(cycleBuf))
+  31 0010 F040      		sbci r31,hi8(-(cycleBuf))
+  32 0012 E081      		ld r30,Z
+  33               	.LVL0:
+  34               	.LM4:
+  35 0014 8091 0000 		lds r24,countBuf
+  36 0018 8150      		subi r24,lo8(-(-1))
+  37 001a 8093 0000 		sts countBuf,r24
+  38               	.LM5:
+  39 001e 8091 0000 		lds r24,headBuf
+  40 0022 8F5F      		subi r24,lo8(-(1))
+  41 0024 8093 0000 		sts headBuf,r24
+  42               	.LM6:
+  43 0028 8091 0000 		lds r24,headBuf
+  44 002c 8031      		cpi r24,lo8(16)
+  45 002e 01F0      		breq .L7
+  46               	.LM7:
+  47 0030 8E2F      		mov r24,r30
+  48               	/* epilogue start */
+  49 0032 0895      		ret
+  50               	.LVL1:
+  51               	.L6:
+  52               	.LM8:
+  53 0034 E0E0      		ldi r30,lo8(0)
+  54               	.LVL2:
+  55               	.LM9:
+  56 0036 8E2F      		mov r24,r30
+  57 0038 0895      		ret
+  58               	.L7:
+  59               	.LM10:
+  60 003a 1092 0000 		sts headBuf,__zero_reg__
+  61               	.LM11:
+  62 003e 8E2F      		mov r24,r30
+  63 0040 0895      		ret
+  64               	.LFE6:
+  66               	.global	ES_PlaceEvent
+  68               	ES_PlaceEvent:
+  69               	.LFB7:
+  70               	.LM12:
+  71               	.LVL3:
+  72               	/* prologue: function */
+  73               	/* frame size = 0 */
+  74 0042 982F      		mov r25,r24
+  75               	.LM13:
+  76 0044 8091 0000 		lds r24,countBuf
+  77               	.LVL4:
+  78 0048 8031      		cpi r24,lo8(16)
+  79 004a 00F4      		brsh .L11
+  80               	.LM14:
+  81 004c E091 0000 		lds r30,tailBuf
+  82 0050 F0E0      		ldi r31,lo8(0)
+  83 0052 E050      		subi r30,lo8(-(cycleBuf))
+  84 0054 F040      		sbci r31,hi8(-(cycleBuf))
+  85 0056 9083      		st Z,r25
+  86               	.LM15:
+  87 0058 8091 0000 		lds r24,tailBuf
+  88 005c 8F5F      		subi r24,lo8(-(1))
+  89 005e 8093 0000 		sts tailBuf,r24
+  90               	.LM16:
+  91 0062 8091 0000 		lds r24,tailBuf
+  92 0066 8031      		cpi r24,lo8(16)
+  93 0068 01F0      		breq .L12
+  94               	.LM17:
+  95 006a 8091 0000 		lds r24,countBuf
+  96 006e 8F5F      		subi r24,lo8(-(1))
+  97 0070 8093 0000 		sts countBuf,r24
+  98               	.L11:
+  99 0074 0895      		ret
+ 100               	.L12:
+ 101               	.LM18:
+ 102 0076 1092 0000 		sts tailBuf,__zero_reg__
+ 103               	.LM19:
+ 104 007a 8091 0000 		lds r24,countBuf
+ 105 007e 8F5F      		subi r24,lo8(-(1))
+ 106 0080 8093 0000 		sts countBuf,r24
+ 107 0084 00C0      		rjmp .L11
+ 108               	.LFE7:
+ 110               	.global	ES_Init
+ 112               	ES_Init:
+ 113               	.LFB8:
+ 114               	.LM20:
+ 115               	/* prologue: function */
+ 116               	/* frame size = 0 */
+ 117               	.LM21:
+ 118 0086 1092 0000 		sts tailBuf,__zero_reg__
+ 119               	.LM22:
+ 120 008a 1092 0000 		sts headBuf,__zero_reg__
+ 121               	.LM23:
+ 122 008e 1092 0000 		sts countBuf,__zero_reg__
+ 123               	.LM24:
+ 124 0092 81E0      		ldi r24,lo8(1)
+ 125 0094 8093 0000 		sts currentState,r24
+ 126               	/* epilogue start */
+ 127               	.LM25:
+ 128 0098 0895      		ret
+ 129               	.LFE8:
+ 131               	.global	ES_Dispatch
+ 133               	ES_Dispatch:
+ 134               	.LFB9:
+ 135               	.LM26:
+ 136               	.LVL5:
+ 137               	/* prologue: function */
+ 138               	/* frame size = 0 */
+ 139 009a 582F      		mov r21,r24
+ 140               	.LBB2:
+ 141               	.LM27:
+ 142 009c E0E0      		ldi r30,lo8(table)
+ 143 009e F0E0      		ldi r31,hi8(table)
+ 144               	.LVL6:
+ 145               	/* #APP */
+ 146               	 ;  93 "event-system.c" 1
+ 147 00a0 8491      		lpm r24, Z
+ 148               		
+ 149               	 ;  0 "" 2
+ 150               	.LVL7:
+ 151               	/* #NOAPP */
+ 152               	.LBE2:
+ 153 00a2 8823      		tst r24
+ 154 00a4 01F4      		brne .+2
+ 155 00a6 00C0      		rjmp .L21
+ 156 00a8 40E0      		ldi r20,lo8(0)
+ 157               	.LVL8:
+ 158 00aa 20E0      		ldi r18,lo8(0)
+ 159 00ac 30E0      		ldi r19,hi8(0)
+ 160 00ae 00C0      		rjmp .L20
+ 161               	.LVL9:
+ 162               	.L17:
+ 163 00b0 4F5F      		subi r20,lo8(-(1))
+ 164               	.LBB3:
+ 165 00b2 242F      		mov r18,r20
+ 166 00b4 30E0      		ldi r19,lo8(0)
+ 167 00b6 F901      		movw r30,r18
+ 168               	.LVL10:
+ 169 00b8 EE0F      		lsl r30
+ 170 00ba FF1F      		rol r31
+ 171 00bc EE0F      		lsl r30
+ 172 00be FF1F      		rol r31
+ 173 00c0 E20F      		add r30,r18
+ 174 00c2 F31F      		adc r31,r19
+ 175 00c4 E050      		subi r30,lo8(-(table))
+ 176 00c6 F040      		sbci r31,hi8(-(table))
+ 177               	/* #APP */
+ 178               	 ;  93 "event-system.c" 1
+ 179 00c8 8491      		lpm r24, Z
+ 180               		
+ 181               	 ;  0 "" 2
+ 182               	.LVL11:
+ 183               	/* #NOAPP */
+ 184               	.LBE3:
+ 185 00ca 8823      		tst r24
+ 186 00cc 01F0      		breq .L23
+ 187               	.L20:
+ 188               	.LBB4:
+ 189               	.LM28:
+ 190               	/* #APP */
+ 191               	 ;  95 "event-system.c" 1
+ 192 00ce 9491      		lpm r25, Z
+ 193               		
+ 194               	 ;  0 "" 2
+ 195               	/* #NOAPP */
+ 196               	.LBE4:
+ 197 00d0 8091 0000 		lds r24,currentState
+ 198               	.LVL12:
+ 199 00d4 9817      		cp r25,r24
+ 200 00d6 01F4      		brne .L17
+ 201               	.LBB5:
+ 202 00d8 B901      		movw r22,r18
+ 203 00da 660F      		lsl r22
+ 204 00dc 771F      		rol r23
+ 205 00de 660F      		lsl r22
+ 206 00e0 771F      		rol r23
+ 207               	.LVL13:
+ 208 00e2 CB01      		movw r24,r22
+ 209 00e4 820F      		add r24,r18
+ 210 00e6 931F      		adc r25,r19
+ 211 00e8 FC01      		movw r30,r24
+ 212               	.LVL14:
+ 213 00ea E050      		subi r30,lo8(-(table+1))
+ 214 00ec F040      		sbci r31,hi8(-(table+1))
+ 215               	/* #APP */
+ 216               	 ;  95 "event-system.c" 1
+ 217 00ee E491      		lpm r30, Z
+ 218               		
+ 219               	 ;  0 "" 2
+ 220               	.LVL15:
+ 221               	/* #NOAPP */
+ 222               	.LBE5:
+ 223 00f0 E517      		cp r30,r21
+ 224 00f2 01F4      		brne .L17
+ 225               	.LBB6:
+ 226               	.LM29:
+ 227 00f4 FC01      		movw r30,r24
+ 228               	.LVL16:
+ 229 00f6 E050      		subi r30,lo8(-(table+2))
+ 230 00f8 F040      		sbci r31,hi8(-(table+2))
+ 231               	/* #APP */
+ 232               	 ;  97 "event-system.c" 1
+ 233 00fa E491      		lpm r30, Z
+ 234               		
+ 235               	 ;  0 "" 2
+ 236               	.LVL17:
+ 237               	/* #NOAPP */
+ 238               	.LBE6:
+ 239 00fc EE23      		tst r30
+ 240 00fe 01F4      		brne .L24
+ 241               	.L18:
+ 242               	.LBB7:
+ 243               	.LM30:
+ 244 0100 FB01      		movw r30,r22
+ 245               	.LVL18:
+ 246 0102 E20F      		add r30,r18
+ 247 0104 F31F      		adc r31,r19
+ 248 0106 E050      		subi r30,lo8(-(table+3))
+ 249 0108 F040      		sbci r31,hi8(-(table+3))
+ 250               	/* #APP */
+ 251               	 ;  99 "event-system.c" 1
+ 252 010a 8591      		lpm r24, Z+
+ 253 010c 9491      		lpm r25, Z
+ 254               		
+ 255               	 ;  0 "" 2
+ 256               	.LVL19:
+ 257               	/* #NOAPP */
+ 258               	.LBE7:
+ 259               	.LM31:
+ 260 010e 0097      		sbiw r24,0
+ 261 0110 01F0      		breq .L25
+ 262 0112 FC01      		movw r30,r24
+ 263 0114 0995      		icall
+ 264               	.LVL20:
+ 265               	.L21:
+ 266 0116 0895      		ret
+ 267               	.LVL21:
+ 268               	.L23:
+ 269 0118 0895      		ret
+ 270               	.LVL22:
+ 271               	.L24:
+ 272               	.LM32:
+ 273 011a E093 0000 		sts currentState,r30
+ 274 011e 00C0      		rjmp .L18
+ 275               	.LVL23:
+ 276               	.L25:
+ 277 0120 0895      		ret
+ 278               	.LFE9:
+ 280               	.global	currentState
+ 281               	.global	currentState
+ 282               		.section .bss
+ 285               	currentState:
+ 286 0000 00        		.skip 1,0
+ 287               	.global	table
+ 288               		.section	.progmem.data,"a",@progbits
+ 291               	table:
+ 292 0000 01        		.byte	1
+ 293 0001 03        		.byte	3
+ 294 0002 02        		.byte	2
+ 295 0003 0000      		.word	gs(GUI_SelectHour)
+ 296 0005 01        		.byte	1
+ 297 0006 04        		.byte	4
+ 298 0007 00        		.byte	0
+ 299 0008 0000      		.word	gs(GUI_ChangeTime)
+ 300 000a 02        		.byte	2
+ 301 000b 03        		.byte	3
+ 302 000c 03        		.byte	3
+ 303 000d 0000      		.word	gs(GUI_SelectMinute)
+ 304 000f 02        		.byte	2
+ 305 0010 01        		.byte	1
+ 306 0011 00        		.byte	0
+ 307 0012 0000      		.word	gs(GUI_IncHour)
+ 308 0014 02        		.byte	2
+ 309 0015 02        		.byte	2
+ 310 0016 00        		.byte	0
+ 311 0017 0000      		.word	gs(GUI_DecHour)
+ 312 0019 03        		.byte	3
+ 313 001a 03        		.byte	3
+ 314 001b 01        		.byte	1
+ 315 001c 0000      		.word	gs(GUI_General)
+ 316 001e 03        		.byte	3
+ 317 001f 01        		.byte	1
+ 318 0020 00        		.byte	0
+ 319 0021 0000      		.word	gs(GUI_IncMinute)
+ 320 0023 03        		.byte	3
+ 321 0024 02        		.byte	2
+ 322 0025 00        		.byte	0
+ 323 0026 0000      		.word	gs(GUI_DecMinute)
+ 324 0028 00        		.byte	0
+ 325 0029 00        		.byte	0
+ 326 002a 00        		.byte	0
+ 327 002b 0000      		.word	0
+ 328               		.lcomm tailBuf,1
+ 329               		.lcomm headBuf,1
+ 330               		.lcomm countBuf,1
+ 331               		.lcomm cycleBuf,16
+ 380               	.Letext0:
+DEFINED SYMBOLS
+                            *ABS*:00000000 event-system.c
+C:\DOCUME~1\оюбек\LOCALS~1\Temp/ccw2Dx8c.s:2      *ABS*:0000003f __SREG__
+C:\DOCUME~1\оюбек\LOCALS~1\Temp/ccw2Dx8c.s:3      *ABS*:0000003e __SP_H__
+C:\DOCUME~1\оюбек\LOCALS~1\Temp/ccw2Dx8c.s:4      *ABS*:0000003d __SP_L__
+C:\DOCUME~1\оюбек\LOCALS~1\Temp/ccw2Dx8c.s:5      *ABS*:00000034 __CCP__
+C:\DOCUME~1\оюбек\LOCALS~1\Temp/ccw2Dx8c.s:6      *ABS*:00000000 __tmp_reg__
+C:\DOCUME~1\оюбек\LOCALS~1\Temp/ccw2Dx8c.s:7      *ABS*:00000001 __zero_reg__
+C:\DOCUME~1\оюбек\LOCALS~1\Temp/ccw2Dx8c.s:18     .text:00000000 ES_GetEvent
+C:\DOCUME~1\оюбек\LOCALS~1\Temp/ccw2Dx8c.s:329    .bss:00000003 countBuf
+C:\DOCUME~1\оюбек\LOCALS~1\Temp/ccw2Dx8c.s:328    .bss:00000002 headBuf
+C:\DOCUME~1\оюбек\LOCALS~1\Temp/ccw2Dx8c.s:330    .bss:00000004 cycleBuf
+C:\DOCUME~1\оюбек\LOCALS~1\Temp/ccw2Dx8c.s:68     .text:00000042 ES_PlaceEvent
+                             .bss:00000001 tailBuf
+C:\DOCUME~1\оюбек\LOCALS~1\Temp/ccw2Dx8c.s:112    .text:00000086 ES_Init
+C:\DOCUME~1\оюбек\LOCALS~1\Temp/ccw2Dx8c.s:285    .bss:00000000 currentState
+C:\DOCUME~1\оюбек\LOCALS~1\Temp/ccw2Dx8c.s:133    .text:0000009a ES_Dispatch
+C:\DOCUME~1\оюбек\LOCALS~1\Temp/ccw2Dx8c.s:291    .progmem.data:00000000 table
+
+UNDEFINED SYMBOLS
+GUI_SelectHour
+GUI_ChangeTime
+GUI_SelectMinute
+GUI_IncHour
+GUI_DecHour
+GUI_General
+GUI_IncMinute
+GUI_DecMinute
+__do_clear_bss

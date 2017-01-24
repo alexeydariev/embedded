@@ -1,0 +1,61 @@
+   1               		.file	"main.c"
+   2               	__SREG__ = 0x3f
+   3               	__SP_H__ = 0x3e
+   4               	__SP_L__ = 0x3d
+   5               	__CCP__  = 0x34
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+  15               	.Ltext0:
+  16               	.global	main
+  18               	main:
+  19               	.LFB6:
+  20               	.LM1:
+  21               	/* prologue: function */
+  22               	/* frame size = 0 */
+  23               	.LM2:
+  24 0000 00D0      		rcall LCD_Init
+  25               	.LM3:
+  26 0002 00D0      		rcall BUT_Init
+  27               	.LM4:
+  28 0004 00D0      		rcall TIM_Init
+  29               	.LM5:
+  30 0006 00D0      		rcall ES_Init
+  31               	.LM6:
+  32 0008 00D0      		rcall GUI_General
+  33               	.LM7:
+  34               	/* #APP */
+  35               	 ;  32 "main.c" 1
+  36 000a 7894      		sei
+  37               	 ;  0 "" 2
+  38               	/* #NOAPP */
+  39               	.L6:
+  40               	.LM8:
+  41 000c 00D0      		rcall ES_GetEvent
+  42               	.LM9:
+  43 000e 8823      		tst r24
+  44               	.LVL0:
+  45 0010 01F0      		breq .L6
+  46               	.LM10:
+  47 0012 00D0      		rcall ES_Dispatch
+  48               	.LVL1:
+  49 0014 00C0      		rjmp .L6
+  50               	.LFE6:
+  76               	.Letext0:
+DEFINED SYMBOLS
+                            *ABS*:00000000 main.c
+C:\DOCUME~1\оюбек\LOCALS~1\Temp/ccuCcWf6.s:2      *ABS*:0000003f __SREG__
+C:\DOCUME~1\оюбек\LOCALS~1\Temp/ccuCcWf6.s:3      *ABS*:0000003e __SP_H__
+C:\DOCUME~1\оюбек\LOCALS~1\Temp/ccuCcWf6.s:4      *ABS*:0000003d __SP_L__
+C:\DOCUME~1\оюбек\LOCALS~1\Temp/ccuCcWf6.s:5      *ABS*:00000034 __CCP__
+C:\DOCUME~1\оюбек\LOCALS~1\Temp/ccuCcWf6.s:6      *ABS*:00000000 __tmp_reg__
+C:\DOCUME~1\оюбек\LOCALS~1\Temp/ccuCcWf6.s:7      *ABS*:00000001 __zero_reg__
+C:\DOCUME~1\оюбек\LOCALS~1\Temp/ccuCcWf6.s:18     .text:00000000 main
+
+UNDEFINED SYMBOLS
+LCD_Init
+BUT_Init
+TIM_Init
+ES_Init
+GUI_General
+ES_GetEvent
+ES_Dispatch

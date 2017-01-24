@@ -1,0 +1,102 @@
+   1               		.file	"buttons.c"
+   2               	__SREG__ = 0x3f
+   3               	__SP_H__ = 0x3e
+   4               	__SP_L__ = 0x3d
+   5               	__CCP__  = 0x34
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+  15               	.Ltext0:
+  16               	.global	BUT_Init
+  18               	BUT_Init:
+  19               	.LFB6:
+  20               	.LM1:
+  21               	/* prologue: function */
+  22               	/* frame size = 0 */
+  23               	.LM2:
+  24 0000 87B3      		in r24,55-32
+  25 0002 837E      		andi r24,lo8(-29)
+  26 0004 87BB      		out 55-32,r24
+  27               	.LM3:
+  28 0006 88B3      		in r24,56-32
+  29 0008 8C61      		ori r24,lo8(28)
+  30 000a 88BB      		out 56-32,r24
+  31               	/* epilogue start */
+  32               	.LM4:
+  33 000c 0895      		ret
+  34               	.LFE6:
+  36               	.global	BUT_Debrief
+  38               	BUT_Debrief:
+  39               	.LFB7:
+  40               	.LM5:
+  41               	/* prologue: function */
+  42               	/* frame size = 0 */
+  43               	.LM6:
+  44 000e B399      		sbic 54-32,3
+  45 0010 00C0      		rjmp .L4
+  46 0012 91E0      		ldi r25,lo8(1)
+  47               	.LVL0:
+  48               	.L5:
+  49               	.LM7:
+  50 0014 8091 0000 		lds r24,comp
+  51 0018 8530      		cpi r24,lo8(5)
+  52 001a 01F0      		breq .L12
+  53               	.LM8:
+  54 001c 8A30      		cpi r24,lo8(10)
+  55 001e 00F4      		brsh .L10
+  56 0020 8F5F      		subi r24,lo8(-(1))
+  57 0022 8093 0000 		sts comp,r24
+  58 0026 0895      		ret
+  59               	.LVL1:
+  60               	.L4:
+  61               	.LM9:
+  62 0028 B499      		sbic 54-32,4
+  63 002a 00C0      		rjmp .L6
+  64 002c 92E0      		ldi r25,lo8(2)
+  65               	.LVL2:
+  66 002e 00C0      		rjmp .L5
+  67               	.LVL3:
+  68               	.L6:
+  69               	.LM10:
+  70 0030 B299      		sbic 54-32,2
+  71 0032 00C0      		rjmp .L7
+  72 0034 93E0      		ldi r25,lo8(3)
+  73               	.LVL4:
+  74 0036 00C0      		rjmp .L5
+  75               	.LVL5:
+  76               	.L7:
+  77               	.LM11:
+  78 0038 1092 0000 		sts comp,__zero_reg__
+  79               	.LVL6:
+  80               	.L10:
+  81 003c 0895      		ret
+  82               	.L12:
+  83               	.LM12:
+  84 003e 8FE0      		ldi r24,lo8(15)
+  85 0040 8093 0000 		sts comp,r24
+  86               	.LM13:
+  87 0044 892F      		mov r24,r25
+  88 0046 00D0      		rcall ES_PlaceEvent
+  89               	.LVL7:
+  90 0048 0895      		ret
+  91               	.LFE7:
+  93               	.global	comp
+  94               	.global	comp
+  95               		.section .bss
+  98               	comp:
+  99 0000 00        		.skip 1,0
+ 132               	.Letext0:
+DEFINED SYMBOLS
+                            *ABS*:00000000 buttons.c
+C:\DOCUME~1\оюбек\LOCALS~1\Temp/ccDYUqXI.s:2      *ABS*:0000003f __SREG__
+C:\DOCUME~1\оюбек\LOCALS~1\Temp/ccDYUqXI.s:3      *ABS*:0000003e __SP_H__
+C:\DOCUME~1\оюбек\LOCALS~1\Temp/ccDYUqXI.s:4      *ABS*:0000003d __SP_L__
+C:\DOCUME~1\оюбек\LOCALS~1\Temp/ccDYUqXI.s:5      *ABS*:00000034 __CCP__
+C:\DOCUME~1\оюбек\LOCALS~1\Temp/ccDYUqXI.s:6      *ABS*:00000000 __tmp_reg__
+C:\DOCUME~1\оюбек\LOCALS~1\Temp/ccDYUqXI.s:7      *ABS*:00000001 __zero_reg__
+C:\DOCUME~1\оюбек\LOCALS~1\Temp/ccDYUqXI.s:18     .text:00000000 BUT_Init
+C:\DOCUME~1\оюбек\LOCALS~1\Temp/ccDYUqXI.s:38     .text:0000000e BUT_Debrief
+C:\DOCUME~1\оюбек\LOCALS~1\Temp/ccDYUqXI.s:98     .bss:00000000 comp
+
+UNDEFINED SYMBOLS
+ES_PlaceEvent
+__do_clear_bss

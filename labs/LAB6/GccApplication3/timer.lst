@@ -1,0 +1,152 @@
+   1               		.file	"timer.c"
+   2               	__SREG__ = 0x3f
+   3               	__SP_H__ = 0x3e
+   4               	__SP_L__ = 0x3d
+   5               	__CCP__  = 0x34
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+  15               	.Ltext0:
+  16               	.global	TIM_Init
+  18               	TIM_Init:
+  19               	.LFB6:
+  20               	.LM1:
+  21               	/* prologue: function */
+  22               	/* frame size = 0 */
+  23               	.LM2:
+  24 0000 82E0      		ldi r24,lo8(2)
+  25 0002 89BF      		out 89-32,r24
+  26               	.LM3:
+  27 0004 9DE0      		ldi r25,lo8(13)
+  28 0006 93BF      		out 83-32,r25
+  29               	.LM4:
+  30 0008 12BE      		out 82-32,__zero_reg__
+  31               	.LM5:
+  32 000a 8CE9      		ldi r24,lo8(-100)
+  33 000c 8CBF      		out 92-32,r24
+  34               	.LM6:
+  35 000e 89B7      		in r24,89-32
+  36 0010 8061      		ori r24,lo8(16)
+  37 0012 89BF      		out 89-32,r24
+  38               	.LM7:
+  39 0014 1FBC      		out 79-32,__zero_reg__
+  40               	.LM8:
+  41 0016 9EBD      		out 78-32,r25
+  42               	.LM9:
+  43 0018 1DBC      		out (76)+1-32,__zero_reg__
+  44 001a 1CBC      		out 76-32,__zero_reg__
+  45               	.LM10:
+  46 001c 89E0      		ldi r24,lo8(15625)
+  47 001e 9DE3      		ldi r25,hi8(15625)
+  48 0020 9BBD      		out (74)+1-32,r25
+  49 0022 8ABD      		out 74-32,r24
+  50               	/* epilogue start */
+  51               	.LM11:
+  52 0024 0895      		ret
+  53               	.LFE6:
+  55               	.global	__vector_6
+  57               	__vector_6:
+  58               	.LFB8:
+  59               	.LM12:
+  60 0026 1F92      		push __zero_reg__
+  61 0028 0F92      		push r0
+  62 002a 0FB6      		in r0,__SREG__
+  63 002c 0F92      		push r0
+  64 002e 1124      		clr __zero_reg__
+  65 0030 2F93      		push r18
+  66 0032 3F93      		push r19
+  67 0034 4F93      		push r20
+  68 0036 5F93      		push r21
+  69 0038 6F93      		push r22
+  70 003a 7F93      		push r23
+  71 003c 8F93      		push r24
+  72 003e 9F93      		push r25
+  73 0040 AF93      		push r26
+  74 0042 BF93      		push r27
+  75 0044 EF93      		push r30
+  76 0046 FF93      		push r31
+  77               	/* prologue: Signal */
+  78               	/* frame size = 0 */
+  79               	.LM13:
+  80 0048 84E0      		ldi r24,lo8(4)
+  81 004a 00D0      		rcall ES_PlaceEvent
+  82               	/* epilogue start */
+  83               	.LM14:
+  84 004c FF91      		pop r31
+  85 004e EF91      		pop r30
+  86 0050 BF91      		pop r27
+  87 0052 AF91      		pop r26
+  88 0054 9F91      		pop r25
+  89 0056 8F91      		pop r24
+  90 0058 7F91      		pop r23
+  91 005a 6F91      		pop r22
+  92 005c 5F91      		pop r21
+  93 005e 4F91      		pop r20
+  94 0060 3F91      		pop r19
+  95 0062 2F91      		pop r18
+  96 0064 0F90      		pop r0
+  97 0066 0FBE      		out __SREG__,r0
+  98 0068 0F90      		pop r0
+  99 006a 1F90      		pop __zero_reg__
+ 100 006c 1895      		reti
+ 101               	.LFE8:
+ 103               	.global	__vector_19
+ 105               	__vector_19:
+ 106               	.LFB7:
+ 107               	.LM15:
+ 108 006e 1F92      		push __zero_reg__
+ 109 0070 0F92      		push r0
+ 110 0072 0FB6      		in r0,__SREG__
+ 111 0074 0F92      		push r0
+ 112 0076 1124      		clr __zero_reg__
+ 113 0078 2F93      		push r18
+ 114 007a 3F93      		push r19
+ 115 007c 4F93      		push r20
+ 116 007e 5F93      		push r21
+ 117 0080 6F93      		push r22
+ 118 0082 7F93      		push r23
+ 119 0084 8F93      		push r24
+ 120 0086 9F93      		push r25
+ 121 0088 AF93      		push r26
+ 122 008a BF93      		push r27
+ 123 008c EF93      		push r30
+ 124 008e FF93      		push r31
+ 125               	/* prologue: Signal */
+ 126               	/* frame size = 0 */
+ 127               	.LM16:
+ 128 0090 00D0      		rcall BUT_Debrief
+ 129               	/* epilogue start */
+ 130               	.LM17:
+ 131 0092 FF91      		pop r31
+ 132 0094 EF91      		pop r30
+ 133 0096 BF91      		pop r27
+ 134 0098 AF91      		pop r26
+ 135 009a 9F91      		pop r25
+ 136 009c 8F91      		pop r24
+ 137 009e 7F91      		pop r23
+ 138 00a0 6F91      		pop r22
+ 139 00a2 5F91      		pop r21
+ 140 00a4 4F91      		pop r20
+ 141 00a6 3F91      		pop r19
+ 142 00a8 2F91      		pop r18
+ 143 00aa 0F90      		pop r0
+ 144 00ac 0FBE      		out __SREG__,r0
+ 145 00ae 0F90      		pop r0
+ 146 00b0 1F90      		pop __zero_reg__
+ 147 00b2 1895      		reti
+ 148               	.LFE7:
+ 190               	.Letext0:
+DEFINED SYMBOLS
+                            *ABS*:00000000 timer.c
+C:\DOCUME~1\оюбек\LOCALS~1\Temp/cc5vGCtY.s:2      *ABS*:0000003f __SREG__
+C:\DOCUME~1\оюбек\LOCALS~1\Temp/cc5vGCtY.s:3      *ABS*:0000003e __SP_H__
+C:\DOCUME~1\оюбек\LOCALS~1\Temp/cc5vGCtY.s:4      *ABS*:0000003d __SP_L__
+C:\DOCUME~1\оюбек\LOCALS~1\Temp/cc5vGCtY.s:5      *ABS*:00000034 __CCP__
+C:\DOCUME~1\оюбек\LOCALS~1\Temp/cc5vGCtY.s:6      *ABS*:00000000 __tmp_reg__
+C:\DOCUME~1\оюбек\LOCALS~1\Temp/cc5vGCtY.s:7      *ABS*:00000001 __zero_reg__
+C:\DOCUME~1\оюбек\LOCALS~1\Temp/cc5vGCtY.s:18     .text:00000000 TIM_Init
+C:\DOCUME~1\оюбек\LOCALS~1\Temp/cc5vGCtY.s:57     .text:00000026 __vector_6
+C:\DOCUME~1\оюбек\LOCALS~1\Temp/cc5vGCtY.s:105    .text:0000006e __vector_19
+
+UNDEFINED SYMBOLS
+ES_PlaceEvent
+BUT_Debrief
